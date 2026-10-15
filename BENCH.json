@@ -540,10 +540,10 @@
  "version": "1.0.0",
  "source": {
   "git": {
-   "head": "04b9224dbe55265a2c061e272f2c22b4147127c5",
-   "url": "https://github.com/jgarzik/cpuminer",
-   "branch": "master",
-   "sha_verified_from": "GitHub API commits/master"
+   "url": "https://github.com/AdnanHodzic/auto-cpufreq",
+   "head": "e7b9fdef27934985ff957a8d02f782993e3533e6",
+   "sha_verified_from": "revendor 2026-10-15: GitHub API commit lookup",
+   "previous_substitute": "https://github.com/jgarzik/cpuminer"
   }
  },
  "license": "NOASSERTION",

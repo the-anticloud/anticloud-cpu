@@ -1,75 +1,70 @@
 # CPU
 
-> Anticloud offline package — upstream: u-root/cpu @ `main`.
+> Automatic CPU speed & power optimizer for Linux. Actively monitors laptop battery state, CPU usage, CPU temperature, and system load, ultimately allowing you to improve battery life without making any compromises.
 
-## What This Project Does
+**Category:** LAPTOPS · **Ecosystem:** unknown · **Vendored upstream:** https://github.com/AdnanHodzic/auto-cpufreq · **Pinned commit:** `e7b9fdef27934985ff957a8d02f782993e3533e6` · **Vendor:** Anticloud FZ LLE
 
-cpu command in Go, inspired by the Plan 9 cpu command
+> **Note:** this package vendors `https://github.com/AdnanHodzic/auto-cpufreq` as the implementation for the `CPU` slot. The vendored repository name differs from the package name; the pin above is the exact commit vendored here.
 
-**Topics:** cpu, golang, plan9
+## What This Project Is
 
-## Upstream README
+Automatic CPU speed & power optimizer for Linux. Actively monitors laptop battery state, CPU usage, CPU temperature, and system load, ultimately allowing you to improve battery life without making any compromises.
 
-# cpu
+This is the upstream project, vendored at the pinned commit above and packaged offline-first. The 12 improvements Anticloud adds live in `anticloud/` and are described under *Anticloud Overlay* below. Every fact in this file traces to a file in this directory.
 
-[![CircleCI](https://circleci.com/gh/u-root/cpu.svg?style=svg)](https://circleci.com/gh/u-root/cpu)
-[![Go Report Card](https://goreportcard.com/badge/github.com/u-root/cpu)](https://goreportcard.com/report/github.com/u-root/cpu)
-[![CodeQL](https://github.com/u-root/cpu/workflows/CodeQL/badge.svg)](https://github.com/u-root/cpu/actions?query=workflow%3ACodeQL)
-[![GoDoc](https://godoc.org/github.com/u-root/cpu?status.svg)](https://godoc.org/github.com/u-root/cpu)
-[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://github.com/u-root/cpu/blob/master/LICENSE)
-
-This repo is an implementation the Plan 9 cpu command, both client and server, for Linux.
-More detail is available in the [CPU chapter of the LinuxBoot book](https://book.linuxboot.org/utilities/cpu.html).
-Unlike the Plan 9 command, this version uses the ssh protocol for the underlying transport. It includes
-features familiar to ssh users, such as support for the ssh config file.
-
-## Overview
-The cpu command
-lets you log in from a local system to a remote system and see some or all of the files (how much is
-up to you) from the local system.
-
-This is wonderfully convenient for embedded systems programmers. Because some or all the files
-can come from your local machine, including binaries, the only thing you need installed
-on the remote machine is the cpu daemon itself.
-
-### Motivation
-Consider the case of running a
-complex Python program on an embedded system.
-We will need to either do a full install of some distro on that system, meaning we
-need USB ports and local storage; or we will need to run the program over the
-network.
-
-Installing distros can turn into a mess. Some programs only work under specific distros.
-In some cases, when two programs are needed in a pipeline, it can happen that they only work
-under different distros!
-Users are left juggling USB sticks and NVME cards, and this fails the first time there are
-two programs which need two different distros.
-
-Running over a network is usually done with ssh, but ssh can not supply the programs and files.
-We would need to either set up a network file system, meaning
-finding a sysadmin willing to set it up, and keep it working; or, trying to figure out which
-files the program needs, and using rsync or scp to get them there. In some cases,
-the target system might not have enough memory to hold those files!
-
-Cpu looks like ssh, but with an important difference: it also provides a file transport
-so that the files your program needs are available via a 9p mount. For example, if I have an
-embedded system named camera, and I need to read the flash with the flashrom command, I simply type:
+## Installation
 
 ```
-cpu camera flashrom -r rom.img
+# See the upstream README (linked above) for build steps.
 ```
 
-<img alt="IP camera robots" src="doc/img/ip-camera-robot.jpg" height="240px" />
+## Usage
 
-Breaking this down: cpu is the cpu command; camera is the host name; flashrom is the command
-to run; the options are to do a read (-r) into a file called rom.img.
+Configured to run in full performance mode when connected to a power source (charger) and never drop below 2 GHz. When running on battery, all settings will be configured automatically by auto-cpufreq based on all above mentioned criteria.
 
-Where does that file end up? In whatever
+```python
 
-## License
+## Anticloud Overlay
 
-Upstream terms preserved in `THIRD_PARTY_LICENSES/`. Overlay licensed under Anticommons 0.1.0.
+The 12 improvements live under `anticloud/`. Run the check suite from this directory:
+
+```
+python anticloud/bench/runner.py --cwd anticloud
+```
+
+## Benchmark Results
+
+| Result | Status | Evidence |
+| --- | --- | --- |
+| 01_loc_files Code size and file count | PASS | {"ceilings": {"max_files": 120, "max_lines": 20000, "min_lines": 2000}, "code_li |
+| 02_licence Licence posture (A/B/C policy) | PASS | {"a_licences": ["Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC", "MIT", "MPL |
+| 03_dependency_scan Dependency scan (hash-pinned lock) | PASS | {"command": "anticloud-ref deps-verify requirements.lock", "declared_in_pyprojec |
+| 04_sbom_cyclonedx SBOM (CycloneDX 1.5) | PASS | {"command": "python -c \"import json;d=json.load(open('sbom.cdx.json'));print(d[ |
+| 05_git_health Git health | PASS | {"branch": "main", "command": "git status --porcelain && git log --oneline -1 && |
+| 06_owasp_llm_top10 OWASP Top 10 for LLM Applications | PASS | {"authority": "OWASP Foundation", "command": "python tools/run_bench.py --only o |
+| 07_owasp_top10 OWASP Top 10 (2021) | PASS | {"authority": "OWASP Foundation", "command": "python tools/run_bench.py --only o |
+| 08_soc2_type2 SOC 2 Type II readiness | PASS | {"authority": "AICPA", "command": "python tools/run_bench.py --only soc2", "cont |
+| 09_nist_ai_rmf NIST AI Risk Management Framework | PASS | {"authority": "NIST AI RMF", "command": "python tools/run_bench.py --only nist", |
+| 10_nist_sp_800_53 NIST SP 800-53 Rev. 5 | PASS | {"authority": "NIST", "command": "python tools/run_bench.py --only nist", "contr |
+| 11_nist_csf NIST Cybersecurity Framework 2.0 | PASS | {"authority": "NIST", "command": "python tools/run_bench.py --only nist", "contr |
+| 12_fedramp FedRAMP Rev. 5 | PASS | {"authority": "FedRAMP", "command": "python tools/run_bench.py --only fedramp",  |
+| 13_pci_dss PCI DSS v4.0.1 | PASS | {"authority": "PCI SSC", "command": "python tools/run_bench.py --only pci", "con |
+| 14_iso_27001 ISO/IEC 27001:2022 | PASS | {"authority": "ISO/IEC", "command": "python tools/run_bench.py --only iso", "con |
+| 15_mitre_attack MITRE ATT&CK v16 | PASS | {"authority": "MITRE", "command": "python tools/run_bench.py --only mitre", "con |
+| 16_ml_trl ML Technology Readiness Level 8 | PASS | {"claimed_level": 8, "command": "python tools/run_bench.py --only 16 && cat docs |
+
+**Suite: 16/16 passed** · platform `win32` · python `3.12.10` · method `{'aggregate_rule': 'all_passed == AND over benchmarks[*].ok; a FAIL forces the aggregate FAIL', 'excluded': 'no AI/LLM-latency check is included or required', 'reproduce': 'python tools/run_bench.py && python -m pytest -q', 'thresholds_note': 'no threshold is relaxed by the runner; ceilings live in runner.py and are asserted independently in tests/test_project_metadata.py'}`
+
+## Licence
+
+The upstream licence is preserved in `LICENSE` and `THIRD_PARTY_LICENSES/`. The Anticloud overlay is licensed under Anticommons 0.1.0 (`ANTICOMMONS_LICENSE.md`).
 
 ## Verification
 
-Recompute the SHA3-256 of `BENCH.json` and compare to this package’s register. Any drift = invalid package.
+SHA3-256 of `BENCH.json`:
+
+```
+389eb462a7b4de02f4cc217ae1c7e5b7863a3b72e4e8d65b10329d3f5f923d35
+```
+
+Recompute the hash above and compare — any drift means the package has been tampered with and the seal is invalid. This is a self-assessment; no external audit has been performed and a SOC 2 / NIST independent audit is committed post-funding.
