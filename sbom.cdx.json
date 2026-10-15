@@ -1,0 +1,68 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.4",
+ "version": 1,
+ "metadata": {
+  "component": {
+   "type": "application",
+   "name": "CPU",
+   "description": "Anticloud overlay-only SBOM (no upstream clone)"
+  }
+ },
+ "components": [
+  {
+   "type": "library",
+   "name": "__init__.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "_version.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "cli.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "crdt.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "observability.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "provenance.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "single_binary.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "sovereign_memory.py",
+   "version": "1.0.0",
+   "scope": "required"
+  },
+  {
+   "type": "library",
+   "name": "zero_trust.py",
+   "version": "1.0.0",
+   "scope": "required"
+  }
+ ]
+}
